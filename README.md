@@ -1,2 +1,2 @@
-# ComBugHunter
-Mining Comments to Uncover Hidden Bugs
+# CoRex
+CoRex: Comment-based Review and Error Exploration System
