@@ -1,0 +1,11 @@
+[project]
+name = "CoRex"
+version = "0.1.0"
+description = "CoRex: Comment-based Review and Error Exploration System"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "langchain>=1.0.3",
+    "pre-commit>=4.3.0",
+    "typos>=1.38.1",
+]
