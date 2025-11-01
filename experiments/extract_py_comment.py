@@ -1,5 +1,5 @@
-import tokenize
 import io
+import tokenize
 from pathlib import Path
 
 root = Path(__file__).parent
