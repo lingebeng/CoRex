@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["prompts/analysis_comment_without_context.md"]
