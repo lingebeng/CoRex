@@ -1,8 +1,3 @@
-"""
-使用 tree_sitter_languages 提取 Python 文件的注释信息。
-包括注释所在的行数和函数上下文。
-"""
-
 import json
 from pathlib import Path
 from typing import Any
@@ -10,20 +5,21 @@ from typing import Any
 from tree_sitter_languages import get_parser
 
 
-class PythonCommentExtractor:
-    """Python 注释提取器"""
+class CommentExtractor:
+    """多语言注释提取器"""
 
-    def __init__(self):
-        self.parser = get_parser("cpp")
+    def __init__(self, language: str):
+        self.language = language
+        self.parser = get_parser(self.language)
         self.source_code = b""
         self.source_lines = []
 
     def parse_file(self, file_path: str | Path) -> dict[str, Any]:
         """
-        解析 Python 文件并提取注释信息
+        解析指定语言的文件并提取注释信息
 
         Args:
-            file_path: Python 文件路径
+            file_path: 文件路径
 
         Returns:
             包含注释信息的字典
@@ -279,82 +275,9 @@ class PythonCommentExtractor:
         return params
 
 
-def main():
-    """主函数"""
-    # 设置路径
-    root = Path(__file__).parent
-    dataset_dir = root / "datasets"
-
-    # 创建提取器
-    extractor = PythonCommentExtractor()
-
-    # 查找所有 C++ 文件
-    py_files = list(dataset_dir.glob("*.cpp"))
-
-    if not py_files:
-        print(f"在 {dataset_dir} 中未找到 Python 文件")
-        return
-
-    print(f"找到 {len(py_files)} 个 Python 文件")
-    print("=" * 80)
-
-    for py_file in py_files:
-        print(f"\n处理文件: {py_file.name}")
-        print("-" * 80)
-
-        result = extractor.parse_file(py_file)
-        from pprint import pprint
-
-        pprint(
-            result,
-            indent=4,  # 缩进空格数
-            depth=5,  # 只显示到第几层
-            sort_dicts=False,  # 是否按键排序
-        )
-        print(f"总注释数: {result['total_comments']}\n")
-
-        for i, comment in enumerate(result["comments"], 1):
-            print(f"[{i}] {comment['type'].upper()}")
-            print(f"    行号: {comment['start_line']}-{comment['end_line']}")
-            print(f"    文本: {comment['text'][:100]}...")  # 限制显示长度
-
-            # 显示上下文信息
-            context = comment["context"]
-
-            if "chain" in context:
-                # 多层嵌套
-                chain_info = " -> ".join(
-                    [f"{c['type']}:{c['name']}" for c in context["chain"]]
-                )
-                print(f"    上下文: {chain_info}")
-                # 显示最内层函数的代码
-                innermost = context["chain"][-1]
-                print(
-                    f"    所在{innermost['type']}代码 ({innermost['start_line']}-{innermost['end_line']}):"
-                )
-                print(
-                    "    " + "\n    ".join(innermost["code"].split("\n")[:5])
-                )  # 显示前5行
-            elif context["type"] in ("function", "class"):
-                print(f"    上下文: {context['type']}:{context['name']}")
-                print(
-                    f"    所在{context['type']}代码 ({context['start_line']}-{context['end_line']}):"
-                )
-                print(
-                    "    " + "\n    ".join(context["code"].split("\n")[:5])
-                )  # 显示前5行
-            else:
-                print(f"    上下文: {context['type']}")
-
-            print()
-
-        # 保存到 JSON 文件
-        output_file = root / f"{py_file.stem}_comments.json"
-        with output_file.open("w", encoding="utf-8") as f:
-            json.dump(result, f, ensure_ascii=False, indent=2)
-        print(f"\n结果已保存到: {output_file}")
-        print("=" * 80)
-
-
 if __name__ == "__main__":
-    main()
+    extractor = CommentExtractor(language="cpp")
+    result = extractor.parse_file(
+        "/home/haifeng/Science/CoRex/experiments/datasets/cpp_comments.cpp"
+    )
+    print(json.dumps(result, indent=4, ensure_ascii=False))
