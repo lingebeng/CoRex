@@ -1,5 +1,6 @@
 import yaml
 from langchain_openai import ChatOpenAI
+from loguru import logger
 from pydantic import SecretStr
 
 from .config import LLM_KEYS_PATH, MODEL_CONFIG_PATH
@@ -21,12 +22,15 @@ class LLM:
             model_configs = yaml.safe_load(f)
 
         self.model_name = model_name
-
-        self.llm = ChatOpenAI(
-            model=model_name,
-            api_key=SecretStr(api_key),
-            **model_configs.get(model_name, {}),
-        )
+        try:
+            self.llm = ChatOpenAI(
+                model=model_name,
+                api_key=SecretStr(api_key),
+                **model_configs.get(model_name, {}),
+            )
+            logger.success(f"Initialized LLM with model: {model_name}")
+        except Exception as e:
+            raise Exception(f"Failed to initialize LLM: {e!s}") from e
 
     def generate(self, prompt: str) -> str:
         try:
@@ -43,6 +47,7 @@ class LLM:
         return f"Agent(model={self.model_name})"
 
 
+# python -m corex.llms
 if __name__ == "__main__":
     llms = LLM()
     prompt = "1 + 1 = ?"

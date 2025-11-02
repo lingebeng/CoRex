@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from loguru import logger
 from tree_sitter_languages import get_parser
 
 
@@ -275,9 +276,10 @@ class CommentExtractor:
         return params
 
 
+# python -m corex.extractor
 if __name__ == "__main__":
     extractor = CommentExtractor(language="cpp")
     result = extractor.parse_file(
         "/home/haifeng/Science/CoRex/experiments/datasets/cpp_comments.cpp"
     )
-    print(json.dumps(result, indent=4, ensure_ascii=False))
+    logger.info(json.dumps(result, indent=4, ensure_ascii=False))
