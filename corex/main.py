@@ -36,10 +36,11 @@ class CoRex:
                 logger.warning(f"No comments found in file: {filename}")
                 continue
             total_comment = []
-            for comment_dic in comments_list:
+            for i, comment_dic in enumerate(comments_list):
                 comment = comment_dic.get("text", "")
-                total_comment.append(comment)
+                total_comment.append(f"## Case{i}\n### Comment\ncomment:{comment}")
             all_comments = "\n".join(total_comment)
+            logger.info(f"{all_comments}")
             self.analyzer.comments = all_comments
             response = self.analyzer.analyze()
             logger.info(f"Analysis completed for file: {filename}")

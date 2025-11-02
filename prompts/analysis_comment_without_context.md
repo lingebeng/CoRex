@@ -3,9 +3,9 @@ You are a professional static code analyzer and code reviewer with expertise in 
 
 Your task is to analyze the following code comment input:
 
-- Code Comment: {{comment}}
+- Code Comment: `comment_content`
 
-## Task 1: Comment Quality
+## Task : Comment Quality
 Determine whether the comment contains any of the following:
 - **Typo** (spelling or capitalization mistakes)
 - **Grammar**
@@ -32,31 +32,50 @@ Suggestion: Don't think multiply -> multiply. Such as `# codespell:ignore`, `# n
 ## Example 1
 
 ### Comment
-Comment: # Add the test time to the verbose output, unfortunately I don't think this
+Comment: # Add the test time to the verbose output, unfortunatly I don't think this
 
 ### Analysis
-- Type: Typo
-- Detail: "unfortunately" should be "unfortunately".
-- Fix Suggestion: Add the test time to the verbose output, unfortunately I don't think this
-
+{
+Type: Typo
+Detail: "unfortunatly" should be "unfortunately".
+Origin: # Add the test time to the verbose output, unfortunatly I don't think this
+Replacements: # Add the test time to the verbose output, unfortunately I don't think this
+}
 ## Example 2
 
 ### Comment
 Comment: # We are looking forward to welcome more users of the PyTorch C++ API.
 
 ### Analysis
-- Type: Grammar
-- Detail: "to welcome" should be "to welcoming"
-- Fix Suggestion: We are looking forward to welcoming more users of the PyTorch C++ API.
-
+```json
+{
+Type: Grammar，
+Detail: "to welcome" should be "to welcoming" ，
+Origin: # We are looking forward to welcome more users of the PyTorch C++ API.
+Replacements: # We are looking forward to welcoming more users of the PyTorch C++ API.
+}
+```
 # Input
-Comment: {{Comment}}
+{{Comment}}
 
 # Output
 Please strictly output in the following format.
-```markdown
-- Type:
-- Detail:
-- Fix Suggestion:
+```json
+[
+    {
+        Case: 1
+        Type:
+        Detail:
+        Origin:
+        Replacements:
+    },
+    {
+        Case: 2
+        Type:
+        Detail:
+        Origin:
+        Replacements:
+    },
+]
 ```
 {{Analysis}}
