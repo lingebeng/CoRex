@@ -13,10 +13,17 @@ class CoRex:
     Comment-based Review and Error Exploration System
     """
 
-    def __init__(self, file_path: Path, extractor: Extractor, analyzer: Analyzer):
+    def __init__(
+        self,
+        file_path: Path,
+        extractor: Extractor,
+        analyzer: Analyzer,
+        save_path: Path = Path("output.log"),
+    ):
         self.file_path = file_path
         self.extractor = extractor
         self.analyzer = analyzer
+        self.save_path = save_path
 
     def run(self):
         """
@@ -40,7 +47,7 @@ class CoRex:
                 self.analyzer.comments = comment
                 response = self.analyzer.analyze()
                 if "Normal" not in response:
-                    with open("output.log", "a") as f:
+                    with open(self.save_path, "a") as f:
                         f.write(f"File: {filename}\n")
                         f.write(f"Comment: {comment}\n")
                         f.write(f"Analysis Result:\n{response}\n")
@@ -72,25 +79,31 @@ def main(
     analyze_type: str = typer.Option(
         "without_context", help="Type of analysis to perform."
     ),
+    save_path: Path = typer.Option(
+        "output.log", help="Path to save the analysis report."
+    ),
 ):
     llms = LLM(model_name=model_name)
     if extractor_type == "comment":
         extractor = CommentExtractor(language=language)
-    elif extractor_type == "keyword":
+    elif extractor_type == "keyword":  # TODO@haifeng
         extractor = KeywordExtractor(language=language)
     else:
         raise ValueError(f"Unsupported extractor type: {extractor_type}")
 
     if analyze_type == "without_context":
         analyzer = AnalyzerWithoutContext(llms=llms)
-    elif analyze_type == "with_context":
+    elif analyze_type == "with_context":  # TODO@haifeng
         analyzer = AnalyzerWithContext(llms=llms)
     else:
         raise ValueError(f"Unsupported analyze type: {analyze_type}")
 
-    corex = CoRex(file_path=file_path, extractor=extractor, analyzer=analyzer)
+    corex = CoRex(
+        file_path=file_path, extractor=extractor, analyzer=analyzer, save_path=save_path
+    )
     corex.run()
 
 
+# python -m corex.main --file_path /path/to/code --model_name deepseek-chat --language python --extractor_type comment --analyze_type without_context
 if __name__ == "__main__":
     typer.run(main)
