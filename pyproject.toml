@@ -7,14 +7,10 @@ requires-python = ">=3.12"
 dependencies = [
     "langchain>=1.0.3",
     "pre-commit>=4.3.0",
-    "typos>=1.38.1",
+    "rich>=14.2.0",
+    "tree-sitter==0.20.4",
     "tree-sitter-languages>=1.10.2",
-]
-
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.0.0",
-    "ruff>=0.11.0",
+    "typos>=1.38.1",
 ]
 
 

@@ -1,0 +1,269 @@
+{
+  "file": "/home/haifeng/Science/CoRex/experiments/datasets/python_comments.py",
+  "total_comments": 22,
+  "comments": [
+    {
+      "type": "docstring",
+      "text": "\"\"\"\nThis is a module-level docstring.\nIt can span multiple lines and is used to document modules.\n\"\"\"",
+      "start_line": 1,
+      "end_line": 4,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Single-line comment",
+      "start_line": 6,
+      "end_line": 6,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# This is the most common type of comment in Python",
+      "start_line": 7,
+      "end_line": 7,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Inline comment on the same line",
+      "start_line": 35,
+      "end_line": 35,
+      "context": {
+        "type": "function",
+        "name": "another_function",
+        "parameters": [
+          "a",
+          "b"
+        ],
+        "start_line": 24,
+        "end_line": 37,
+        "code": "def another_function(a, b):\n    \"\"\"\n    Triple single quotes also work for docstrings.\n\n    Parameters:\n        a (int): First number\n        b (int): Second number\n\n    Returns:\n        int: The product of a and b\n    \"\"\"\n    # Inline comment on the same line\n    result = a * b  # Comment at end of line\n    return result"
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Comment at end of line",
+      "start_line": 36,
+      "end_line": 36,
+      "context": {
+        "type": "function",
+        "name": "another_function",
+        "parameters": [
+          "a",
+          "b"
+        ],
+        "start_line": 24,
+        "end_line": 37,
+        "code": "def another_function(a, b):\n    \"\"\"\n    Triple single quotes also work for docstrings.\n\n    Parameters:\n        a (int): First number\n        b (int): Second number\n\n    Returns:\n        int: The product of a and b\n    \"\"\"\n    # Inline comment on the same line\n    result = a * b  # Comment at end of line\n    return result"
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Attribute comment",
+      "start_line": 49,
+      "end_line": 49,
+      "context": {
+        "chain": [
+          {
+            "type": "class",
+            "name": "SampleClass",
+            "start_line": 40,
+            "end_line": 53,
+            "code": "class SampleClass:\n    \"\"\"\n    Class-level docstring.\n\n    This class demonstrates different types of comments.\n    \"\"\"\n\n    def __init__(self):\n        \"\"\"Constructor docstring.\"\"\"\n        self.value = 0  # Attribute comment\n\n    def method(self):\n        \"\"\"Method docstring.\"\"\"\n        pass"
+          },
+          {
+            "type": "function",
+            "name": "__init__",
+            "parameters": [
+              "self"
+            ],
+            "start_line": 47,
+            "end_line": 49,
+            "code": "    def __init__(self):\n        \"\"\"Constructor docstring.\"\"\"\n        self.value = 0  # Attribute comment"
+          }
+        ]
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# TODO: This is a TODO comment",
+      "start_line": 56,
+      "end_line": 56,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# FIXME: This is a FIXME comment",
+      "start_line": 57,
+      "end_line": 57,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# NOTE: This is a NOTE comment",
+      "start_line": 58,
+      "end_line": 58,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# XXX: This is a warning comment",
+      "start_line": 59,
+      "end_line": 59,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# This is a multi-line comment",
+      "start_line": 69,
+      "end_line": 69,
+      "context": {
+        "type": "function",
+        "name": "multiline_comment_example",
+        "parameters": [],
+        "start_line": 62,
+        "end_line": 81,
+        "code": "def multiline_comment_example():\n    \"\"\"\n    Multi-line comments can be achieved using:\n    1. Multiple single-line comments\n    2. Triple-quoted strings (docstrings)\n    \"\"\"\n\n    # This is a multi-line comment\n    # using multiple single-line comments\n    # Each line starts with #\n\n    \"\"\"\n    This is NOT a true multi-line comment,\n    but a string literal that gets ignored.\n    Often used as a multi-line comment workaround.\n    \"\"\"\n\n    x = 10\n\n    return x"
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# using multiple single-line comments",
+      "start_line": 70,
+      "end_line": 70,
+      "context": {
+        "type": "function",
+        "name": "multiline_comment_example",
+        "parameters": [],
+        "start_line": 62,
+        "end_line": 81,
+        "code": "def multiline_comment_example():\n    \"\"\"\n    Multi-line comments can be achieved using:\n    1. Multiple single-line comments\n    2. Triple-quoted strings (docstrings)\n    \"\"\"\n\n    # This is a multi-line comment\n    # using multiple single-line comments\n    # Each line starts with #\n\n    \"\"\"\n    This is NOT a true multi-line comment,\n    but a string literal that gets ignored.\n    Often used as a multi-line comment workaround.\n    \"\"\"\n\n    x = 10\n\n    return x"
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Each line starts with #",
+      "start_line": 71,
+      "end_line": 71,
+      "context": {
+        "type": "function",
+        "name": "multiline_comment_example",
+        "parameters": [],
+        "start_line": 62,
+        "end_line": 81,
+        "code": "def multiline_comment_example():\n    \"\"\"\n    Multi-line comments can be achieved using:\n    1. Multiple single-line comments\n    2. Triple-quoted strings (docstrings)\n    \"\"\"\n\n    # This is a multi-line comment\n    # using multiple single-line comments\n    # Each line starts with #\n\n    \"\"\"\n    This is NOT a true multi-line comment,\n    but a string literal that gets ignored.\n    Often used as a multi-line comment workaround.\n    \"\"\"\n\n    x = 10\n\n    return x"
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# === Section divider comment ===",
+      "start_line": 84,
+      "end_line": 84,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "### Another style of section comment ###",
+      "start_line": 86,
+      "end_line": 86,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "#############################################",
+      "start_line": 88,
+      "end_line": 88,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Box-style comment block",
+      "start_line": 89,
+      "end_line": 89,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "#############################################",
+      "start_line": 90,
+      "end_line": 90,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Comment with special characters: é, ñ, 中文, 日本語",
+      "start_line": 96,
+      "end_line": 96,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Comment with code: print(\"Hello\")",
+      "start_line": 97,
+      "end_line": 97,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Comment with URL: https://example.com",
+      "start_line": 98,
+      "end_line": 98,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    },
+    {
+      "type": "comment",
+      "text": "# Comment with email: user@example.com",
+      "start_line": 99,
+      "end_line": 99,
+      "context": {
+        "type": "module",
+        "name": null
+      }
+    }
+  ]
+}
