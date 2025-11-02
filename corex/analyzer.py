@@ -52,7 +52,8 @@ class AnalyzerWithoutContext(Analyzer):
             self.prompt = f.read()
 
     def analyze(self):
-        prompt_filled = self.prompt.replace("{{comment}}", self.comments)
+        prompt_filled = self.prompt.replace("{{Comment}}", self.comments)
+        # logger.info(f"Filled Prompt:\n{prompt_filled}")
         response = self.llms.generate(prompt_filled)
         return response
 

@@ -35,22 +35,34 @@ class CoRex:
             if not comments_list:
                 logger.warning(f"No comments found in file: {filename}")
                 continue
-            total_comment = []
-            for i, comment_dic in enumerate(comments_list):
+            for comment_dic in comments_list:
                 comment = comment_dic.get("text", "")
-                total_comment.append(f"## Case{i}\n### Comment\ncomment:{comment}")
-            all_comments = "\n".join(total_comment)
-            logger.info(f"{all_comments}")
-            self.analyzer.comments = all_comments
-            response = self.analyzer.analyze()
-            logger.info(f"Analysis completed for file: {filename}")
-            logger.info(f"Analysis Result for {filename}:\n{response}")
+                self.analyzer.comments = comment
+                response = self.analyzer.analyze()
+                if "Normal" not in response:
+                    with open("output.log", "a") as f:
+                        f.write(f"File: {filename}\n")
+                        f.write(f"Comment: {comment}\n")
+                        f.write(f"Analysis Result:\n{response}\n")
+                        f.write("=" * 80 + "\n")
+                    logger.info(f"Analysis Result for {filename}:\n{response}")
+
+            # total_comment = []
+            # for i, comment_dic in enumerate(comments_list):
+            #     comment = comment_dic.get("text", "")
+            #     total_comment.append(f"## Case{i}\n### Comment\ncomment:{comment}")
+            # all_comments = "\n".join(total_comment)
+            # logger.info(f"{all_comments}")
+            # self.analyzer.comments = all_comments
+            # response = self.analyzer.analyze()
+            # logger.info(f"Analysis completed for file: {filename}")
+            # logger.info(f"Analysis Result for {filename}:\n{response}")
             # break
 
 
 def main(
     file_path: Path = typer.Option(
-        "/home/haifeng/data/pytorch/torch", help="Path to the folder/repo to scan."
+        "/home/haifeng/data/pytorch/torchgen", help="Path to the folder/repo to scan."
     ),
     model_name: str = typer.Option("deepseek-chat", help="LLM model name."),
     language: str = typer.Option(
