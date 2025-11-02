@@ -1,21 +1,43 @@
 import json
+from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any
+from typing import Any, List
 
 from loguru import logger
 from tree_sitter_languages import get_parser
 
+from .config import LANGUAGE_SUFFIX_MAP
 
-class CommentExtractor:
+
+class Extractor(ABC):
+    def __init__(self, language: str):
+        self.language = language
+
+    @abstractmethod
+    def parse_file(self, file_path: Path) -> List[dict[str, Any]]:
+        raise NotImplementedError()
+
+
+class KeywordExtractor(Extractor):
+    """关键词提取器 - 占位类"""
+
+    def __init__(self, language: str):
+        super().__init__(language=language)
+
+    def parse_file(self, file_path: Path) -> List[dict[str, Any]]:  # type: ignore
+        pass
+
+
+class CommentExtractor(Extractor):
     """多语言注释提取器"""
 
     def __init__(self, language: str):
-        self.language = language
+        super().__init__(language=language)
         self.parser = get_parser(self.language)
         self.source_code = b""
         self.source_lines = []
 
-    def parse_file(self, file_path: str | Path) -> dict[str, Any]:
+    def parse_file(self, file_path: Path) -> List[dict[str, Any]]:
         """
         解析指定语言的文件并提取注释信息
 
@@ -26,20 +48,32 @@ class CommentExtractor:
             包含注释信息的字典
         """
         file_path = Path(file_path)
-        self.source_code = file_path.read_bytes()
-        self.source_lines = self.source_code.decode("utf-8").split("\n")
+        if file_path.is_dir():
+            suffix = LANGUAGE_SUFFIX_MAP.get(self.language, [])
+            if not suffix:
+                raise ValueError(f"Unsupported language: {self.language}")
 
-        tree = self.parser.parse(self.source_code)
-        root_node = tree.root_node
+            file_list = [p for ext in suffix for p in file_path.rglob(f"*{ext}")]
+        else:
+            file_list = [file_path]
 
-        comments = []
-        self._extract_comments(root_node, comments)
+        all_comments = []
+        for file in file_list:
+            self.source_code = file.read_bytes()
+            self.source_lines = self.source_code.decode("utf-8").split("\n")
 
-        return {
-            "file": str(file_path),
-            "total_comments": len(comments),
-            "comments": comments,
-        }
+            tree = self.parser.parse(self.source_code)
+            root_node = tree.root_node
+
+            comments = []
+            self._extract_comments(root_node, comments)
+            dic = {
+                "file": str(file),
+                "total_comments": len(comments),
+                "comments": comments,
+            }
+            all_comments.append(dic)
+        return all_comments
 
     def _extract_comments(self, node, comments: list) -> None:
         """
@@ -280,6 +314,6 @@ class CommentExtractor:
 if __name__ == "__main__":
     extractor = CommentExtractor(language="cpp")
     result = extractor.parse_file(
-        "/home/haifeng/Science/CoRex/experiments/datasets/cpp_comments.cpp"
+        Path("/home/haifeng/Science/CoRex/experiments/datasets/cpp_comments.cpp")
     )
     logger.info(json.dumps(result, indent=4, ensure_ascii=False))

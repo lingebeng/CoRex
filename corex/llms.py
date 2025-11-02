@@ -10,12 +10,10 @@ class LLM:
     def __init__(
         self,
         model_name: str = "deepseek-chat",
-        api_key: str = "",
     ):
-        if not api_key:
-            with open(LLM_KEYS_PATH, "r", encoding="utf-8") as f:
-                llm_keys = yaml.safe_load(f)
-            api_key = llm_keys.get(model_name, {}).get("api_key", "")
+        with open(LLM_KEYS_PATH, "r", encoding="utf-8") as f:
+            llm_keys = yaml.safe_load(f)
+        api_key = llm_keys.get(model_name, {}).get("api_key", "")
         if not api_key:
             raise ValueError("API key is required. ")
         with open(MODEL_CONFIG_PATH, "r", encoding="utf-8") as f:
