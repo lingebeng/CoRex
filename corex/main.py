@@ -48,12 +48,12 @@ class CoRex:
                 response = self.analyzer.analyze()
                 if "Normal" not in response:
                     with open(self.save_path, "a") as f:
-                        f.write(f"File: {filename}\n")
-                        f.write(f"Comment: {comment}\n")
-                        f.write(f"Analysis Result:\n{response}\n")
+                        f.write(f"File:\n {filename}\n")
+                        f.write(f"Comment:\n{comment}\n")
+                        f.write(f"Analysis Result\n{response}\n")
                         f.write("=" * 80 + "\n")
                     logger.info(f"Analysis Result for {filename}:\n{response}")
-
+            # FIXME@haifeng: whether analyze all comments together in one file?
             # total_comment = []
             # for i, comment_dic in enumerate(comments_list):
             #     comment = comment_dic.get("text", "")
@@ -104,6 +104,6 @@ def main(
     corex.run()
 
 
-# python -m corex.main --file_path /path/to/code --model_name deepseek-chat --language python --extractor_type comment --analyze_type without_context
+# python -m corex.main --file-path /path/to/code --model-name deepseek-chat --language python --extractor-type comment --analyze-type without_context
 if __name__ == "__main__":
     typer.run(main)
