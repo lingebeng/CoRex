@@ -50,6 +50,7 @@ Do **NOT** flag the following as errors:
 ## Example 1: Typo Detection
 
 ### Input
+
 ```
 # Add the test time to the verbose output, unfortunatly I don't think this
 ```
@@ -58,10 +59,10 @@ Do **NOT** flag the following as errors:
 
 ```json
 {
-    "type": "Typo",
-    "detail": "'unfortunatly' should be 'unfortunately'",
-    "origin": "# Add the test time to the verbose output, unfortunatly I don't think this",
-    "replacement": "# Add the test time to the verbose output, unfortunately I don't think this"
+  "type": "Typo",
+  "detail": "'unfortunatly' should be 'unfortunately'",
+  "origin": "# Add the test time to the verbose output, unfortunatly I don't think this",
+  "replacement": "# Add the test time to the verbose output, unfortunately I don't think this"
 }
 ```
 
@@ -74,50 +75,60 @@ Do **NOT** flag the following as errors:
 ```
 
 ### Output
+
 ```json
 {
-    "type": "Grammar",
-    "detail": "'to welcome' should be 'to welcoming' (gerund form required after 'looking forward to')",
-    "origin": "# We are looking forward to welcome more users of the PyTorch C++ API.",
-    "replacement": "# We are looking forward to welcoming more users of the PyTorch C++ API."
+  "type": "Grammar",
+  "detail": "'to welcome' should be 'to welcoming' (gerund form required after 'looking forward to')",
+  "origin": "# We are looking forward to welcome more users of the PyTorch C++ API.",
+  "replacement": "# We are looking forward to welcoming more users of the PyTorch C++ API."
 }
 ```
 
 ## Example 3: No Issues
 
 ### Input
+
 ```
 # then it's the default branch, otherwise it's master.
 ```
 
 ### Output
+
 ```json
 {
-    "type": "Normal",
-    "detail": null,
-    "origin": "# then it's the default branch, otherwise it's master.",
-    "replacement": null
+  "type": "Normal",
+  "detail": null,
+  "origin": "# then it's the default branch, otherwise it's master.",
+  "replacement": null
 }
 ```
 
 ## Example 4: Technical Identifier (No Error)
 
 ### Input
+
 ```
 // torch::autograd::AccumulateGrad For Compiled Autograd, we just want the op
 ```
 
 ### Output
+
 ```json
 {
-    "type": "Normal",
-    "detail": null,
-    "origin": "// torch::autograd::AccumulateGrad For Compiled Autograd, we just want the op",
-    "replacement": null
+  "type": "Normal",
+  "detail": null,
+  "origin": "// torch::autograd::AccumulateGrad For Compiled Autograd, we just want the op",
+  "replacement": null
 }
 ```
 
 ---
+
+# Attention
+
+Don't detect the issues about missing article 'the'.
+Don't flag the issues about missing article 'the'.
 
 # Output Format
 
@@ -125,14 +136,15 @@ Provide your analysis in the following JSON structure:
 
 ```json
 {
-    "type": "<Typo|Grammar|Normal>",
-    "detail": "<Explanation of the issue, or null if Normal>",
-    "origin": "<The original comment text>",
-    "replacement": "<The corrected version, or null if Normal>"
+  "type": "<Typo|Grammar|Normal>",
+  "detail": "<Explanation of the issue, or null if Normal>",
+  "origin": "<The original comment text>",
+  "replacement": "<The corrected version, or null if Normal>"
 }
 ```
 
 ## Field Specifications
+
 - **type**: One of "Typo", "Grammar", or "Normal"
 - **detail**: String explaining the specific issue found (null for Normal)
 - **origin**: The original comment text exactly as provided

@@ -54,8 +54,9 @@ pre-commit install
 
 ```bash
 # llm_keys.yaml
-model_name:
-    api_key: "sk-*****"
+model_name:api-key
+e.g:
+"deepseek-chat": "sk-***"
 
 # model_config.yaml
 model_name:

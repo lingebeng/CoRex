@@ -44,6 +44,8 @@ class CoRex:
                 continue
             for comment_dic in comments_list:
                 comment = comment_dic.get("text", "")
+                if comment == "":
+                    continue
                 self.analyzer.comments = comment
                 response = self.analyzer.analyze()
                 if "Normal" not in response:
